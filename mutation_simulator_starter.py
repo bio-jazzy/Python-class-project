@@ -134,10 +134,10 @@ def run_simulation(seq, trials, mode="any"):
 # ---------------------------------------------------------------------------
 
 def print_report(counts):
-    """Print each category with its count and its percentage of all trials."""
-    # TODO
-    pass
-
+    total= (sum(counts.values()))
+    for category in counts: 
+        percentage= (counts[category]/total)*100
+        print(category, counts[category])
 
 def plot_results(counts, title="Effects of random mutations"):
     """Draw a bar chart of the counts."""
