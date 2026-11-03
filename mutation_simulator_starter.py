@@ -101,23 +101,34 @@ def classify(original_protein, mutated_protein, kind):
 # Role 3: Simulator
 # ---------------------------------------------------------------------------
 
-def run_simulation(seq, trials, mode="any"):
+def run_simulation(seq1, trials, mode="any"):
     """Mutate the ORIGINAL seq `trials` times, translate and classify each result,
     and return a dictionary of counts, e.g. {"silent": 241, "missense": 690, ...}.
     mode="substitution" uses only substitute(); mode="any" uses random_mutation()."""
     counts = {"silent": 0, "missense": 0, "nonsense": 0, "frameshift": 0}
-    # TODO
     for i in range(trials):
         if mode == "any":
-            seq2 = random_mutation(seq)
+            seq2 = random_mutation(seq1)
             return seq2
-        if mode == "deletion":
-            seq2 = delete(seq)
+        elif mode == "substitution":
+            seq2 = substitute(seq1)
             return seq2
-        if mode == "insertion":
-            seq2 = insert(seq)
+        elif mode == "insertion":
+            seq2 = insert(seq1)
             return seq2
-
+        elif mode == "deletion":
+            seq2 = delete(seq1)
+            return seq2
+        new_protein=translate(seq2)
+        previous_protein=translate(seq1)
+        if classify(previous_protein, new_protein)== "silent":
+            counts["silent"]= counts["silent"] + 1
+        elif classify(previous_protein, new_protein)== "missense":
+            counts["missense"]= counts["missense"] + 1
+        elif classify(previous_protein, new_protein)== "nonsense":
+            counts["nonsense"]= counts["nonsense"] + 1
+        elif classify(previous_protein, new_protein)== "frameshift":
+            counts["frameshift"]= counts["frameshift"] + 1
     return counts
 
 
