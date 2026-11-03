@@ -56,7 +56,6 @@ def translate(seq):
 # ---------------------------------------------------------------------------
 # Role 1: Mutator
 # ---------------------------------------------------------------------------
-
 def substitute(seq):
     pos = random.randrange(len(seq))
     new_base = random.choice([b for b in BASES if b != seq[pos]])
@@ -78,8 +77,17 @@ def random_mutation(seq):
     """Apply one randomly chosen mutation.
     Returns (new_seq, kind, position), where kind is
     "substitution", "insertion" or "deletion"."""
-    # TODO
-    pass
+    kind = random.choice(["substitution", "insertion", "deletion"])
+
+    if kind == "substitution":
+        new_seq, pos = substitute(seq)
+        return new_seq, kind, pos
+    elif kind == "insertion":
+        new_seq, pos = insert(seq)
+        return new_seq, kind, pos
+    else:
+        new_seq, pos = delete(seq)
+        return new_seq, kind, pos
 
 
 # ---------------------------------------------------------------------------
