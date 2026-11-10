@@ -78,7 +78,17 @@ def random_mutation(seq):
     """Apply one randomly chosen mutation.
     Returns (new_seq, kind, position), where kind is
     "substitution", "insertion" or "deletion"."""
-    # TODO
+    kind = random.choice(["substitution", "insertion", "deletion"])
+    if kind == "substitution":
+        new_seq, pos = substitute(seq)
+        return new_seq, kind, pos
+    elif kind == "insertion":
+        new_seq, pos = insert(seq)
+        return new_seq, kind, pos
+    else:
+        new_seq, pos = delete(seq)
+        return new_seq, kind, pos
+
     pass
 
 
